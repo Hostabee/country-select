@@ -24,12 +24,15 @@
         </template>
       </paper-listbox>
     </paper-dropdown-menu>
-    
+
   </template>
 
   <script>
     (function() {
       window.Protoss78 = window.Protoss78 || {};
+
+      window.Protoss78.compareBy = (prop) =>
+        (o1, o2) => o1[prop].localeCompare(o2[prop]);
 
       /**
        * `country-select`
@@ -89,17 +92,19 @@
              */
             language: {
               type: String,
-              value: 'en'
-            },
-            _codeUrl: {
-              type: String,
-              computed: '_calculateUrl(language)',
-              observer: '_reloadResources'
+              value: 'en',
             },
             _countries: {
-              type: Array
+              type: Array,
+              readOnly: true,
             },
           };
+        }
+
+        static get observers() {
+          return [
+            '_onLanguageChanged(language)',
+          ];
         }
 
         ready() {
@@ -107,40 +112,22 @@
           this.addEventListener('app-localize-resources-loaded', this._onTranslationLoaded);
         }
 
-        attached() {
-          this._reloadResources(this._codeUrl);
-        }
-
-        _reloadResources(url) {
-          this.loadResources(this.resolveUrl(url));
+        _onLanguageChanged(lang) {
+          if (lang) {
+            const path = this.resolveUrl(`../country-list/data/${lang.replace('-', '_')}/country.json`);
+            this.loadResources(path, lang, true);
+          }
         }
 
         _onTranslationLoaded() {
-          var countries = [];
-          var lang = this.language.replace('_', '-');
-          var values = this.resources[lang];
-          var codes = Object.keys(values);
-          for (var i = 0; i < codes.length; i++) {
-            var country = {};
-            country.code = codes[i];
-            country.name = values[country.code];
-            countries.push(country);
-          }
-          countries.sort(this._compareCountry);
-          this.set('_countries', countries);
-        }
-
-        _calculateUrl(language) {
-          var lang = language.replace('-', '_');
-          return '../country-list/data/' + lang + '/formatJsCountries.json';
-        }
-
-        _compareCountry(a, b) {
-          if (a.name < b.name)
-            return -1;
-          if (a.name > b.name)
-            return 1;
-          return 0;
+          const values = this.resources[this.language.replace('_', '-')];
+          const countries = Object.keys(values)
+            .map((key) => Object.assign({}, {
+              code: key,
+              name: values[key],
+            }))
+            .sort(window.Protoss78.compareBy('name'));
+          this._set_countries(countries);
         }
 
       }
