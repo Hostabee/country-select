@@ -18,7 +18,7 @@
       <paper-listbox class="dropdown-content"
         slot="dropdown-content"
         attr-for-selected="code"
-        selected="{{selectedCountry}}">
+        selected="{{selected}}">
         <template is="dom-repeat" items="[[_countries]]">
           <paper-item code="[[item.code]]">[[item.name]]</paper-item>
         </template>
@@ -74,10 +74,10 @@
              * The currently selected country. The country is represented by its
              * [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
              *
-             * @attribute selectedCountry
+             * @attribute selected
              * @type String
              */
-            selectedCountry: {
+            selected: {
               type: String,
               notify: true,
             },

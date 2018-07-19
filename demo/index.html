@@ -29,7 +29,7 @@
         <dom-bind>
           <template>
             <div>Selected country code: {{selected}}</div>
-            <country-select selected-country="{{selected}}"></country-select>
+            <country-select selected="{{selected}}"></country-select>
           </template>
         </dom-bind>
       </template>
@@ -43,7 +43,7 @@
         <dom-bind>
           <template>
             <div>Selected country code: {{selected}}</div>
-            <country-select language="de" label="Land" selected-country="{{selected}}"></country-select>
+            <country-select language="de" label="Land" selected="{{selected}}"></country-select>
           </template>
         </dom-bind>
       </template>
@@ -65,7 +65,7 @@
               </paper-listbox>
             </paper-dropdown-menu>
             <div>Selected country code: {{selected}}</div>
-            <country-select language="{{selectedLanguage}}" selected-country="{{selected}}"></country-select>
+            <country-select language="{{selectedLanguage}}" selected="{{selected}}"></country-select>
           </template>
         </dom-bind>
       </template>
