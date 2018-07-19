@@ -14,13 +14,13 @@
     }
     </style>
 
-    <paper-dropdown-menu label="{{label}}">
+    <paper-dropdown-menu label="[[label]]">
       <paper-listbox class="dropdown-content"
         slot="dropdown-content"
         attr-for-selected="code"
         selected="{{selectedCountry}}">
-        <template is="dom-repeat" items="{{_countries}}">
-          <paper-item code="{{item.code}}">[[item.name]]</paper-item>
+        <template is="dom-repeat" items="[[_countries]]">
+          <paper-item code="[[item.code]]">[[item.name]]</paper-item>
         </template>
       </paper-listbox>
     </paper-dropdown-menu>
