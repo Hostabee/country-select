@@ -154,6 +154,13 @@
           this.root
             .querySelector('#menuButton #country-list > dom-repeat')
             .items = this._countries;
+          // Refresh the text displayed in the menu trigger.
+          // (required after dom-repeat template is re-rendered).
+          let selectedCountry = this.selected;
+          setTimeout(() => {
+            this.selected = '';
+            this.selected = selectedCountry;
+          }, 50);
         }
 
       }
