@@ -5,34 +5,22 @@
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../polymer/lib/utils/html-tag.html">
 
 <dom-module id="country-select">
-  <template>
-    <style>
-    :host {
-      display: block;
-    }
-    </style>
-
-    <paper-dropdown-menu label="[[label]]">
-      <paper-listbox class="dropdown-content"
-        slot="dropdown-content"
-        attr-for-selected="code"
-        selected="{{selected}}">
-        <template is="dom-repeat" items="[[_countries]]">
-          <paper-item code="[[item.code]]">[[item.name]]</paper-item>
-        </template>
-      </paper-listbox>
-    </paper-dropdown-menu>
-
-  </template>
-
   <script>
     (function() {
       window.Protoss78 = window.Protoss78 || {};
 
       window.Protoss78.compareBy = (prop) =>
         (o1, o2) => o1[prop].localeCompare(o2[prop]);
+
+      const PaperDropdownMenu = (behaviors) => {
+        let dropdownMenu = document.createElement('paper-dropdown-menu');
+        return class extends Polymer.mixinBehaviors(behaviors, dropdownMenu.constructor) {};
+      }
+
+      let memoizedTemplate;
 
       /**
        * `country-select`
@@ -49,9 +37,7 @@
        * @memberof Protoss78
        * @demo demo/index.html
        */
-      class CountrySelect extends Polymer.mixinBehaviors(
-        [Polymer.AppLocalizeBehavior],
-        Polymer.Element) {
+      class CountrySelect extends PaperDropdownMenu([Polymer.AppLocalizeBehavior]) {
 
         static get is() {
           return 'country-select';
@@ -97,6 +83,7 @@
             _countries: {
               type: Array,
               readOnly: true,
+              observer: '_renderCountryList',
             },
           };
         }
@@ -105,6 +92,33 @@
           return [
             '_onLanguageChanged(language)',
           ];
+        }
+
+        static get template() {
+          if (!memoizedTemplate) {
+            let template = Polymer.html `
+              <paper-listbox
+                id="country-list"
+                slot="dropdown-content"
+                class="dropdown-content"
+                attr-for-selected="code"
+                selected="{{selected}}">
+                <dom-repeat>
+                  <template>
+                    <paper-item code="[[item.code]]">[[item.name]]</paper-item>
+                  </template>
+                </dom-repeat>
+              </paper-listbox>
+            `;
+            // Clone the contents of the superclass template.
+            let superTemplateContents = document.importNode(super.template, true);
+            // Replace the <slot id="content"> by a define template.
+            superTemplateContents.content
+              .querySelector('#menuButton #content')
+              .replaceWith(template.content);
+            memoizedTemplate = superTemplateContents;
+          }
+          return memoizedTemplate;
         }
 
         ready() {
@@ -128,6 +142,18 @@
             }))
             .sort(window.Protoss78.compareBy('name'));
           this._set_countries(countries);
+        }
+
+        /**
+         * (Re)renders the items of dom-repeat. The dom-repeat element into the
+         * template literal handles the data binding on the "items" attribute as
+         * a JSON object and fails to deserialize the passed value. This method
+         * avoid this issue and does a "manual" binding.
+         */
+        _renderCountryList() {
+          this.root
+            .querySelector('#menuButton #country-list > dom-repeat')
+            .items = this._countries;
         }
 
       }
