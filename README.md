@@ -1,8 +1,11 @@
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Protoss78/country-select)
-
 # \<country-select\>
 
-A simple country selector web component using the paper-dropdown-menu that implements the app-localize-behavior and can translate the country names. Currently it supports localized country names for 253 languages. The country list is based on [umpirsky/country-list](https://github.com/umpirsky/country-list).
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Protoss78/country-select)
+
+
+A simple country selector web component.
+
+It's a [paper-dropdown-menu](https://github.com/PolymerElements/paper-dropdown-menu) that implements the [app-localize-behavior](https://github.com/PolymerElements/app-localize-behavior) and can translate the country names. Currently it supports localized country names for 253 languages. The country list is based on [umpirsky/country-list](https://github.com/umpirsky/country-list).
 
 <!--
 ```
@@ -23,6 +26,7 @@ A simple country selector web component using the paper-dropdown-menu that imple
 </custom-element-demo>
 ```
 -->
+
 ```html
 <country-select></country-select>
 <country-select language="de" label="Land"></country-select>
@@ -30,7 +34,7 @@ A simple country selector web component using the paper-dropdown-menu that imple
 
 ![Animation](https://github.com/Protoss78/country-select/blob/master/animation.gif "Animation")
 
-### Bundle with polymer build
+## Bundle with polymer build
 
 To build include the country list data files in your `polymer.json`.
 
