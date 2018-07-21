@@ -141,13 +141,15 @@
 
         _onTranslationLoaded() {
           const values = this.resources[this.language.replace('_', '-')];
-          const countries = Object.keys(values)
-            .map((key) => Object.assign({}, {
-              code: key,
-              name: values[key],
-            }))
-            .sort(window.Protoss78.compareBy('name'));
-          this._set_countries(countries);
+          if (values) {
+            const countries = Object.keys(values)
+              .map((key) => Object.assign({}, {
+                code: key,
+                name: values[key],
+              }))
+              .sort(window.Protoss78.compareBy('name'));
+            this._setCountries(countries);
+          }
         }
 
         /**
@@ -166,7 +168,7 @@
           setTimeout(() => {
             this.selected = '';
             this.selected = selectedCountry;
-          }, 50);
+          }, 10);
         }
 
       }

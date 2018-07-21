@@ -1,32 +1,52 @@
 <!doctype html>
 
 <html>
-  <head>
-    <title>country-select test</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
 
-    <link rel="import" href="../country-select.html">
-  </head>
-  <body>
+<head>
+  <title>country-select test</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
 
-    <test-fixture id="basic">
-      <template>
-        <country-select></country-select>
-      </template>
-    </test-fixture>
+  <link rel="import" href="../country-select.html">
+</head>
 
-    <script>
-      suite('country-select', function() {
+<body>
 
-        test('instantiating the element works', function() {
-          var element = fixture('basic');
-          assert.equal(element.is, 'country-select');
-        });
+  <test-fixture id="Default">
+    <template>
+      <country-select></country-select>
+    </template>
+  </test-fixture>
 
+  <script>
+    describe('Behavior Audit - Fixture: Default', function() {
+      let select;
+
+      beforeEach(() => {
+        select = fixture('Default');
       });
-    </script>
-  </body>
+
+      it('should inherit from paper-dropdown-menu', function() {
+        expect(select.is).to.be.equal('paper-dropdown-menu');
+      });
+
+      it('should support localization', function(done) {
+        expect(select.language).to.be.equal('en');
+        select.selected = 'DE';
+        select.addEventListener('countries-changed', () => {
+          // Delay required to let time to the listbox to be re-rendered.
+          setTimeout(() => {
+            expect(select.selectedItemLabel).to.be.equal('Allemagne');
+            done();
+          }, 20);
+        });
+        select.language = 'fr';
+      });
+
+    });
+  </script>
+</body>
+
 </html>
