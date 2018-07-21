@@ -49,7 +49,7 @@
              * The label to be displayed in the dropdown menu.
              *
              * @attribute label
-             * @type String
+             * @type {String}
              * @default 'Country'
              */
             label: {
@@ -61,7 +61,7 @@
              * [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
              *
              * @attribute selected
-             * @type String
+             * @type {String}
              */
             selected: {
               type: String,
@@ -73,16 +73,22 @@
              * [BCP 47](https://tools.ietf.org/html/bcp47).
              *
              * @attribute language
-             * @type String
+             * @type {String}
              * @default 'en'
              */
             language: {
               type: String,
               value: 'en',
             },
-            _countries: {
+            /**
+             * The list of countries contained by the element.
+             *
+             * @type {Array}
+             */
+            countries: {
               type: Array,
               readOnly: true,
+              notify: true,
               observer: '_renderCountryList',
             },
           };
@@ -153,7 +159,7 @@
         _renderCountryList() {
           this.root
             .querySelector('#menuButton #country-list > dom-repeat')
-            .items = this._countries;
+            .items = this.countries;
           // Refresh the text displayed in the menu trigger.
           // (required after dom-repeat template is re-rendered).
           let selectedCountry = this.selected;
