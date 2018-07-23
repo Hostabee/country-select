@@ -28,6 +28,9 @@
     "web-component"
   ],
   "author": "Roman Kaufmann <roman.kaufmann.at@gmail.com>",
+  "contributors": [
+    "Mason Louchart <mason.louchart@hostabee.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Protoss78/country-select/issues"
