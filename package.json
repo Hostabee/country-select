@@ -1,0 +1,41 @@
+{
+  "name": "country-select",
+  "version": "2.0.1",
+  "description": "A simple country selector using the paper-dropdown-menu",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "polymer lint",
+    "test": "polymer test",
+    "serve": "polymer serve",
+    "commit": "npx git-cz",
+    "release": "npx standard-version",
+    "release:major": "npx standard-version --release-as major",
+    "release:minor": "npx standard-version --release-as minor",
+    "release:patch": "npx standard-version --release-as patch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Protoss78/country-select.git"
+  },
+  "keywords": [
+    "country",
+    "select",
+    "polymer",
+    "web",
+    "component",
+    "web-component"
+  ],
+  "author": "Roman Kaufmann <roman.kaufmann.at@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Protoss78/country-select/issues"
+  },
+  "homepage": "https://github.com/Protoss78/country-select#readme",
+  "devDependencies": {
+    "commitizen": "^2.10.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "standard-version": "^4.4.0"
+  }
+}
